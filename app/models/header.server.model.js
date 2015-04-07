@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 /**
  * Article Schema
  */
-var CategorySchema = new Schema({
+var HeaderSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
@@ -20,15 +20,33 @@ var CategorySchema = new Schema({
 		trim: true,
 		required: 'Title cannot be blank'
 	},
-	content: {
+	name: {
+		type: String,
+		default: '',
+		trim: true,
+		required: 'Name cannot be blank'
+	},
+	caption: {
 		type: String,
 		default: '',
 		trim: true
 	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	}
+	sliders: [
+		{
+			"image": string,
+			"text": string,
+			"desc": string
+		}
+	],
+	subcategories: [schema.types.ObjectId],
+	promotions: [
+		{
+			"text": String,
+			"title": String,
+			"image": String,
+			"alt": String
+		}
+	]
 });
 
 mongoose.model('Article', ArticleSchema);
