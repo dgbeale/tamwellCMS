@@ -33,20 +33,20 @@ var HeaderSchema = new Schema({
 	},
 	sliders: [
 		{
-			"image": string,
-			"text": string,
-			"desc": string
+			image: String,
+			text: String,
+			desc: String
 		}
 	],
-	subcategories: [schema.types.ObjectId],
+	subcategories: [],
 	promotions: [
 		{
-			"text": String,
-			"title": String,
-			"image": String,
-			"alt": String
+			text: String,
+			title: String,
+			image: String,
+			alt: String
 		}
 	]
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Header', HeaderSchema);

@@ -5,102 +5,91 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Article = mongoose.model('Article'),
+	header = mongoose.model('Header'),
 	_ = require('lodash');
 
 /**
- * Create a article
+ * Create a header
  */
 exports.create = function(req, res) {
-	var article = new Article(req.body);
-	article.user = req.user;
+	var header = new header(req.body);
+	header.user = req.user;
 
-	article.save(function(err) {
+	header.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(article);
+			res.json(header);
 		}
 	});
 };
 
 /**
- * Show the current article
+ * Show the current header
  */
 exports.read = function(req, res) {
-	res.json(req.article);
+	res.json(req.header);
 };
 
 /**
- * Update a article
+ * Update a header
  */
 exports.update = function(req, res) {
-	var article = req.article;
+	var header = req.header;
 
-	article = _.extend(article, req.body);
+	header = _.extend(header, req.body);
 
-	article.save(function(err) {
+	header.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(article);
+			res.json(header);
 		}
 	});
 };
 
 /**
- * Delete an article
+ * Delete an header
  */
 exports.delete = function(req, res) {
-	var article = req.article;
+	var header = req.header;
 
-	article.remove(function(err) {
+	header.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(article);
+			res.json(header);
 		}
 	});
 };
 
 /**
- * List of Articles
+ * List of headers
  */
 exports.list = function(req, res) {
-	Article.find().sort('-created').populate('user', 'displayName').exec(function(err, articles) {
+	header.findOne().exec(function(err, header) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(articles);
+			res.json(header);
 		}
 	});
 };
 
-/**
- * Article middleware
- */
-exports.articleByID = function(req, res, next, id) {
-	Article.findById(id).populate('user', 'displayName').exec(function(err, article) {
-		if (err) return next(err);
-		if (!article) return next(new Error('Failed to load article ' + id));
-		req.article = article;
-		next();
-	});
-};
 
 /**
- * Article authorization middleware
+ * header authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.article.user.id !== req.user.id) {
+	if (req.header.user.id !== req.user.id) {
 		return res.status(403).send({
 			message: 'User is not authorized'
 		});

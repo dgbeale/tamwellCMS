@@ -15,11 +15,11 @@ angular.module('articles').config(['$stateProvider',
 		}).
 		state('viewArticle', {
 			url: '/articles/:articleId',
-			templateUrl: 'modules/articles/views/view-article.client.view.html'
+			templateUrl: 'modules/articles/views/view-header.client.view.html'
 		}).
 		state('editArticle', {
 			url: '/articles/:articleId/edit',
-			templateUrl: 'modules/articles/views/edit-article.client.view.html'
+			templateUrl: 'modules/articles/views/edit-header.client.view.html'
 		});
 	}
 ]);
